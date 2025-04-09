@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-primary text-white;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-accent hover:bg-accent/90 text-white;
+  }
+  
+  .section {
+    @apply min-h-screen py-20 px-4 md:px-8;
+  }
+}
