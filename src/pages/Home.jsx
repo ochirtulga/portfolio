@@ -125,10 +125,10 @@ const Home = () => {
                 Get in Touch
               </Link>
               <Link
-                to="/about"
+                to="/projects"
                 className="btn border border-accent text-accent hover:bg-accent hover:text-white flex items-center justify-center text-sm" // Reduced text size
               >
-                About me
+                View My Work
               </Link>
               <a
                 href="/resume.pdf" // Updated path assuming resume is in public

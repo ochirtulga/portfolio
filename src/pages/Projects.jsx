@@ -4,35 +4,52 @@ import { ArrowTopRightOnSquareIcon, CodeBracketIcon } from '@heroicons/react/24/
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
-
   const projects = [
     {
+      title: 'User Access Management system',
+      description: 'Internal user access management system for handling accesses between internal APIs and user-to-API calls',
+      image: 'project_uam.png',
+      tags: ['Spring', 'React', 'Postgre'],
+      diagram: '/project_uam.png',
+      type: 'work',
+    },
+    {
+      title: 'Platform Migration',
+      description: 'Platfrom Migration into distributed systems',
+      image: 'project_data-platform.png',
+      tags: ['Apache Hadoop', 'Apache Spark', 'Apache Cassandra', 'DataStax', 'RedHat Linux'],
+      diagram: '/project_data-platform.png',
+      type: 'work',
+    },
+    {
       title: 'Behavioral Scoring',
-      description: 'A full-stack e-commerce platform with user authentication and payment integration.',
-      image: 'https://via.placeholder.com/600x400',
-      tags: ['React', 'Node.js', 'MongoDB'],
-      demo: '#',
-      code: '#',
+      description: 'Built customer credit score calculating system including automated data pipelines, score calculating',
+      image: 'project_behavioral-score.png',
+      tags: ['Apache Spark', 'OracleDB', 'Postgres', 'MSSQL', 'Apache Cassandra', 'PySpark'],
+      diagram: '/project_behavioral-score.png',
+      type: 'work',
+    },
+    {
+      title: 'Life Stories',
+      description: 'In the world full of AI, share your human experience/story with others.',
+      image: 'project_life-stories.png',
+      tags: ['FastAPI', 'Poetry', 'React', 'Tailwind CSS', 'npm'],
+      code: 'https://github.com/ochirtulga/life-stories-app',
+      type: 'personal',
     },
     {
       title: 'Portfolio Website',
       description: 'A responsive portfolio website built with modern web technologies.',
-      image: 'https://via.placeholder.com/600x400',
+      image: 'project_portfolio.png',
       tags: ['React', 'Tailwind CSS', 'Framer Motion'],
-      demo: '#',
-      code: '#',
-    },
-    {
-      title: 'Platform Migration',
-      description: 'A collaborative task management application with real-time updates.',
-      image: 'https://via.placeholder.com/600x400',
-      tags: ['React', 'Firebase', 'Tailwind CSS'],
-      demo: '#',
-      code: '#',
+      demo: 'https://ochirtulga.github.io',
+      code: 'https://github.com/ochirtulga/portfolio',
+      type: 'personal',
     },
   ];
-
-  const filters = ['all', 'frontend', 'backend', 'fullstack'];
+  const filteredProjects =
+  filter === 'all' ? projects : projects.filter((p) => p.type === filter);
+  const filters = ['all', 'personal', 'work'];
 
   return (
     <section className="section pt-32">
@@ -75,7 +92,7 @@ const Projects = () => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -104,20 +121,39 @@ const Projects = () => {
                   ))}
                 </div>
                 <div className="flex gap-4">
-                  <a
-                    href={project.demo}
-                    className="flex items-center gap-2 text-accent hover:text-accent/80"
-                  >
-                    <ArrowTopRightOnSquareIcon className="h-5 w-5" />
-                    Live Demo
-                  </a>
-                  <a
-                    href={project.code}
-                    className="flex items-center gap-2 text-accent hover:text-accent/80"
-                  >
-                    <CodeBracketIcon className="h-5 w-5" />
-                    Source Code
-                  </a>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      className="flex items-center gap-2 text-accent hover:text-accent/80"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ArrowTopRightOnSquareIcon className="h-5 w-5" />
+                      Live Demo
+                    </a>
+                  )}
+                  {project.code && (
+                    <a
+                      href={project.code}
+                      className="flex items-center gap-2 text-accent hover:text-accent/80"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <CodeBracketIcon className="h-5 w-5" />
+                      Source Code
+                    </a>
+                  )}
+                  {!project.demo && !project.code && project.diagram && (
+                    <a
+                      href={project.diagram}
+                      className="flex items-center gap-2 text-accent hover:text-accent/80"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ArrowTopRightOnSquareIcon className="h-5 w-5" />
+                      View Diagram
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -128,4 +164,4 @@ const Projects = () => {
   );
 };
 
-export default Projects; 
+export default Projects;
