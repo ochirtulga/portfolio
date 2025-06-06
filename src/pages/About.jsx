@@ -1,88 +1,216 @@
-import { motion } from 'framer-motion';
-import { BriefcaseIcon } from '@heroicons/react/24/outline';
-import { FaReact, FaNodeJs, FaJava, FaHtml5, FaPython, FaDocker, FaGitAlt, FaAws } from 'react-icons/fa';
-import { SiSpringboot, SiPostgresql, SiMongodb, SiApachehadoop, SiFastapi, SiApachecassandra, SiOracle, SiJavascript, SiTailwindcss, SiJira, SiPostman, SiApachekafka, SiApachespark } from 'react-icons/si';
-import { VscVscode } from 'react-icons/vsc';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { BriefcaseIcon, AcademicCapIcon, LightBulbIcon, TrophyIcon } from '@heroicons/react/24/outline';
+import { useRef } from 'react';
+
+// Timeline Item Component
+const TimelineItem = ({ data, index, isLeft }) => {
+  const itemRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "center center"]
+  });
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const x = useTransform(scrollYProgress, [0, 0.5], [isLeft ? -50 : 50, 0]);
+  
+  const Icon = data.type === 'education' ? AcademicCapIcon : BriefcaseIcon;
+  
+  return (
+    <motion.div 
+      ref={itemRef}
+      style={{ opacity, x }}
+      className={`flex w-full ${isLeft ? 'justify-start' : 'justify-end'} mb-12`}
+    >
+      <div className={`w-5/12 ${!isLeft && 'order-1'}`}>
+        <div className="bg-secondary p-6 rounded-lg shadow-lg">
+          <div className="flex items-center mb-2">
+            <Icon className="h-6 w-6 text-accent mr-3 flex-shrink-0" />
+            <h3 className="text-xl font-semibold">{data.title}</h3>
+          </div>
+          <div className="text-gray-400 mb-3">{data.company || data.institution}</div>
+          <div className="text-sm text-gray-500 mb-4">{data.period}</div>
+          
+          {/* Key Learnings Section */}
+          {data.keyLearnings && data.keyLearnings.length > 0 && (
+            <div className="mt-4">
+              <div className="flex items-center mb-2">
+                <LightBulbIcon className="h-5 w-5 text-accent mr-2" />
+                <h4 className="text-lg font-medium text-white">Key Learnings</h4>
+              </div>
+              <ul className="space-y-2">
+                {data.keyLearnings.map((item, idx) => (
+                  <motion.li 
+                    key={idx}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 * idx }}
+                    className="flex items-start"
+                  >
+                    <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-accent mr-2"></span>
+                    <span className="text-gray-300">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Awards Section */}
+          {data.awards && data.awards.length > 0 && (
+            <div className="mt-4">
+              <div className="flex items-center mb-2">
+                <TrophyIcon className="h-5 w-5 text-accent mr-2" />
+                <h4 className="text-lg font-medium text-white">Awards</h4>
+              </div>
+              <ul className="space-y-2">
+                {data.awards.map((award, idx) => (
+                  <motion.li 
+                    key={idx}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 * idx }}
+                    className="flex items-start"
+                  >
+                    <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-accent mr-2"></span>
+                    <span className="text-gray-300">{award}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const About = () => {
-  const skills = [
-    { 
-      name: 'Backend', 
-      items: [
-        { name: 'Java', icon: <FaJava className="text-red-500" /> },
-        { name: 'Spring Boot', icon: <SiSpringboot className="text-green-500" /> },
-        { name: 'Python', icon: <FaPython className="text-blue-400" /> },
-        { name: 'FastAPI', icon: <SiFastapi className="text-green-600" /> },
-        { name: 'Node.js', icon: <FaNodeJs className="text-green-600" /> },
-        { name: 'AWS', icon: <FaAws className="text-orange-500" /> }
-      ] 
-    },
-    { 
-      name: 'Tools', 
-      items: [
-        { name: 'Git', icon: <FaGitAlt className="text-orange-600" /> },
-        { name: 'Docker', icon: <FaDocker className="text-blue-400" /> },
-        { name: 'Kafka', icon: <SiApachekafka className="text-black" /> },
-        { name: 'Spark', icon: <SiApachespark className="text-orange-500" /> },
-        { name: 'VS Code', icon: <VscVscode className="text-blue-500" /> },
-        { name: 'Postman', icon: <SiPostman className="text-orange-500" /> },
-        { name: 'Jira', icon: <SiJira className="text-blue-600" /> }
-      ] 
-    },
-    { 
-      name: 'Database & Storage', 
-      items: [
-        { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-600" /> },
-        { name: 'Cassandra', icon: <SiApachecassandra className='text-blue-300' /> },
-        { name: 'Oracle', icon: <SiOracle className="text-red-500" /> },
-        { name: 'MongoDB', icon: <SiMongodb className="text-green-500" /> },
-        { name: 'Hadoop', icon: <SiApachehadoop className="text-yellow-400" />}
-      ] 
-    },
-    { 
-      name: 'Frontend', 
-      items: [
-        { name: 'React', icon: <FaReact className="text-blue-500" /> },
-        { name: 'JavaScript', icon: <SiJavascript className="text-yellow-500" /> },
-        { name: 'HTML/CSS', icon: <FaHtml5 className="text-orange-500" /> },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-teal-500" /> }
-      ] 
-    },
-  ];
-
-  const experiences = [
+  // Career timeline data
+  const careerTimeline = [
     {
+      type: 'work',
       title: 'Software Engineer III',
       company: 'Thermo Fisher Scientific',
       period: 'Jul 2022 - Mar 2025',
-      duration: '2 years 9 months',
-      description: `Development of high-performance backend systems and middleware applications, focusing on system integration and performance optimization.
-
-Achievements:
-Improved internal search endpoint performance by 50 percent resulting in improved user experience
-Designed and implemented an internal UAM system that resulted in centralized and easy access control between internal service-to-service and user-to-service
-Developed middleware applications to facilitate seamless integration with existing endpoints, enabling smooth adoption of Python for future development and integration efforts
-Improved the data serialization and validation for Python projects by implementing Pydantic models
-Developed scalable, secure, and highly performing Spring endpoints that fulfill all customer requirements`
+      keyLearnings: [
+        'Continuous Integration and Continuous Deployment',
+        'Cloud Infrastructure and Deployment',
+        'Containerization and Orchestration',
+        'Microservice Architecture Design Patterns',
+        'Logging Metrics and Debugging'
+      ],
+      awards: [
+      ]
     },
     {
-      title: 'Database Engineer',
-      company: 'KHAN Bank',
+      type: 'work',
+      title: 'Software Engineer',
+      company: 'Khan Bank',
       period: 'Feb 2018 - Sep 2021',
-      duration: '3 years 9 months',
-      description: `Led the project to introduce the first distributed platform in the company, which includes transactional, analytics, and historical layers, resulting in a 50 percent reduction in licensing costs and enabling significant future opportunities.
-
-Achievements:
-Created a customer behavioral scoring system using Hadoop and Spark, which reduced the loan decision-making duration from 3 days to 3 hours
-Created a centralized data lake, leading to improvements in performance and fault tolerance of historical data pipelines
-Enabled data-driven decision-making opportunities by introducing a new distributed platform
-Rebuilt the customer-facing system on the distributed platform, decreased downtime by 90 percent
-Organized multiple training sessions for the development team, and the continuous support resulted in a seamless transition to the distributed platform`
+      keyLearnings: [
+        'Distributed Systems Design',
+        'Microservice Architectures',
+        'Real-time Event Handling',
+        'Batch Data Processing',
+        'Data Pipeline Architecture',
+        'System Administration'
+      ],
+      awards: [
+        'Best Young Employee of the Year',
+        '1st place at Cyber Mock Drill'
+      ]
     },
+    // Add more career items as needed
   ];
 
+  // Education timeline data
+  const educationTimeline = [
+    {
+      type: 'education',
+      title: 'Master of Computer Science',
+      institution: 'Maharishi International University',
+      period: 'Oct 2021 - Dec 2023',
+      keyLearnings: [
+        'Cloud Computing',
+        'Modern Web Application Frameworks',
+        'Advanced Algorithms and Data Structures'
+      ],
+      awards: [
+      ]
+    },
+    {
+      type: 'education',
+      title: 'Bachelor of Information Technology',
+      institution: 'Mongolian University of Science and Technology',
+      period: 'Sep 2014 - Jun 2018',
+      keyLearnings: [
+        'Computer science fundamentals',
+        'Software development lifecycle',
+        'Database Management Systems'
+      ],
+      awards: [
+        'Best Alumni Award',
+        '1st place at Tech Innovation Competition',
+        'Credit rewards for academic excellence'
+      ]
+    },
+    // Add more education items as needed
+  ];
+
+  // Create a chronological timeline with alternating education and career items
+  // First, sort each array by date (oldest first)
+  const sortedCareer = [...careerTimeline].sort((a, b) => {
+    const aYear = parseInt(a.period.split(' - ')[0].split(' ')[1]);
+    const bYear = parseInt(b.period.split(' - ')[0].split(' ')[1]);
+    return aYear - bYear; // Reversed order: oldest first
+  });
+  
+  const sortedEducation = [...educationTimeline].sort((a, b) => {
+    const aYear = parseInt(a.period.split(' - ')[0].split(' ')[1]);
+    const bYear = parseInt(b.period.split(' - ')[0].split(' ')[1]);
+    return aYear - bYear; // Reversed order: oldest first
+  });
+  
+  // Create a custom timeline that alternates between education and career
+  // based on chronological order
+  const timelineItems = [];
+  let careerIndex = 0;
+  let educationIndex = 0;
+  
+  // Get the year from both arrays
+  const getYear = (item) => parseInt(item.period.split(' - ')[0].split(' ')[1]);
+  
+  // Merge items in chronological order (oldest first), alternating when possible
+  while (careerIndex < sortedCareer.length || educationIndex < sortedEducation.length) {
+    const hasCareer = careerIndex < sortedCareer.length;
+    const hasEducation = educationIndex < sortedEducation.length;
+    
+    // If we have both types, compare years and take the oldest
+    if (hasCareer && hasEducation) {
+      const careerYear = getYear(sortedCareer[careerIndex]);
+      const educationYear = getYear(sortedEducation[educationIndex]);
+      
+      if (careerYear <= educationYear) {
+        timelineItems.push(sortedCareer[careerIndex]);
+        careerIndex++;
+      } else {
+        timelineItems.push(sortedEducation[educationIndex]);
+        educationIndex++;
+      }
+    } 
+    // If we only have career items left
+    else if (hasCareer) {
+      timelineItems.push(sortedCareer[careerIndex]);
+      careerIndex++;
+    } 
+    // If we only have education items left
+    else {
+      timelineItems.push(sortedEducation[educationIndex]);
+      educationIndex++;
+    }
+  }
+
   return (
-    <section className="section pt-32">
+    <section className="section pt-32 pb-20">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,108 +221,36 @@ Organized multiple training sessions for the development team, and the continuou
           <h1 className="text-4xl font-bold mb-4">About Me</h1>
           <div className="w-24 h-1 bg-accent mx-auto mb-8"></div>
           <p className="text-lg text-gray-300 max-w-5xl mx-auto">
-          I am a passionate Software Engineer with over 6 years of experience delivering impactful solutions across diverse
-industries. Successfully introduced innovative systems that significantly shaped company growth and future
-strategies, including licensing cost reduction by 50 percent. Handled transition and migration of systems and
-datasets seamlessly. Designed systems and data models that handle millions of requests, processing complex
-datasets, and driving business success through tailored technical solutions.
+            I am a passionate Software Engineer with 7 years of experience delivering impactful solutions across diverse
+            industries. Proactive, curious, and collaborative—eager to learn from others, contribute to cross-functional teams, and translate product requirements into robust technical solutions. Takes ownership, communicates clearly, and consistently seeks out opportunities for technical and product improvement.
           </p>
         </motion.div>
 
-        {/* Skills Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="mb-16"
-        >
-          <h2 className="text-2xl font-bold mb-8 text-center">Skills & Expertise</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {skills.map((category) => (
-              <div
-                key={category.name}
-                className="bg-secondary p-6 rounded-lg hover:scale-105 transition-transform"
-              >
-                <h3 className="text-xl font-semibold mb-4 text-accent text-center">{category.name}</h3>
-                <ul className="space-y-3">
-                  {category.items.map((item) => (
-                    <li key={item.name} className="flex items-center gap-3">
-                      <span className="text-2xl">{item.icon}</span>
-                      <span>{item.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        {/* Timeline Section */}
+        <div className="mb-20">
+          <h2 className="text-2xl font-bold mb-12 text-center">My Journey</h2>
+          
+          {/* Timeline container */}
+          <div className="relative">
+            {/* Center line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-accent"></div>
+            
+            {/* Timeline items */}
+            <div className="relative">
+              {timelineItems.map((item, index) => (
+                <TimelineItem 
+                  key={index} 
+                  data={item} 
+                  index={index} 
+                  isLeft={index % 2 === 0}
+                />
+              ))}
+            </div>
           </div>
-        </motion.div>
-
-        {/* Experience Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-        >
-          <h2 className="text-2xl font-bold mb-8 text-center">Experience</h2>
-          <div className="space-y-8 max-w-6xl mx-auto">
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 * index, duration: 0.5 }}
-                className="bg-secondary p-6 rounded-lg"
-              >
-                <div className="flex items-center mb-4">
-                  <BriefcaseIcon className="h-6 w-6 text-accent mr-4 flex-shrink-0" />
-                  <div className="flex-grow">
-                    <h3 className="text-xl font-semibold">{exp.title}</h3>
-                    <div className="flex justify-between items-center text-gray-400">
-                      <span>{exp.company}</span>
-                      <span>{exp.duration} • {exp.period}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  {exp.description.split('\n\n').map((section, idx) => {
-                    if (section.startsWith('Achievements:')) {
-                      return (
-                        <div key={idx} className="space-y-4">
-                          <h4 className="text-lg font-medium text-accent flex items-center">
-                            <span className="w-8 h-0.5 bg-accent mr-3"></span>
-                            {section.split(':')[0]}
-                          </h4>
-                          <ul className="space-y-4">
-                            {section.split('\n').slice(1).map((item, itemIdx) => (
-                              <motion.li 
-                                key={itemIdx} 
-                                className="flex items-start group"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.1 * itemIdx }}
-                              >
-                                <span className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-accent mr-3 group-hover:scale-125 transition-transform"></span>
-                                <span className="text-gray-300 group-hover:text-white transition-colors">{item.trim()}</span>
-                              </motion.li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    }
-                    return (
-                      <p key={idx} className="text-gray-300 leading-relaxed">
-                        {section}
-                      </p>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
-export default About; 
+export default About;

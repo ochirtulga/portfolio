@@ -1,58 +1,61 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaGithub, FaInstagram, FaLinkedin, FaTwitter, FaHtml5, FaJava, FaPython, FaNodeJs, FaReact, FaAws, FaDocker, FaGitAlt } from 'react-icons/fa';
-import { SiSpringboot, SiPostgresql, SiMongodb, SiApachecassandra, SiApachekafka, SiApachespark, SiFastapi, SiJavascript, SiTailwindcss, SiJira, SiPostman, SiOracle } from 'react-icons/si';
-import { VscVscode } from 'react-icons/vsc';
+import { FaLinkedin, FaGithub, FaInstagram, FaTwitter, FaReact, FaNodeJs, FaJava, FaHtml5, FaPython, FaDocker, FaGitAlt, FaAws } from 'react-icons/fa';
+import { SiSpringboot, SiPostgresql, SiMongodb, SiApachehadoop, SiFastapi, SiLeetcode, SiApachecassandra, SiOracle, SiJavascript, SiTailwindcss, SiJira, SiPostman, SiApachekafka, SiApachespark, SiKubernetes, SiJenkins, SiAngular, SiTypescript } from 'react-icons/si';
 import { HiExternalLink } from 'react-icons/hi';
 
 const Home = () => {
-  const techStack = [
-    {
-      category: 'Backend',
-      icons: [
-        { name: 'Java', icon: <FaJava className="text-red-500" />, color: 'text-red-500' },
-        { name: 'Spring Boot', icon: <SiSpringboot className="text-green-500" />, color: 'text-green-500' },
-        { name: 'Python', icon: <FaPython className="text-blue-400" />, color: 'text-blue-400' },
-        { name: 'FastAPI', icon: <SiFastapi className="text-green-600" />, color: 'text-green-600' },
-        { name: 'Node.js', icon: <FaNodeJs className="text-green-600" />, color: 'text-green-600' },
-      ],
+  const skills = [
+    { 
+      name: 'Backend', 
+      items: [
+        { name: 'Java', icon: <FaJava className="text-red-500" /> },
+        { name: 'Spring Boot', icon: <SiSpringboot className="text-green-500" /> },
+        { name: 'Python', icon: <FaPython className="text-blue-400" /> },
+        { name: 'FastAPI', icon: <SiFastapi className="text-green-600" /> },
+        { name: 'Node.js', icon: <FaNodeJs className="text-green-600" /> }
+      ] 
+    },
+    { 
+      name: 'Tools', 
+      items: [
+        { name: 'Git', icon: <FaGitAlt className="text-orange-600" /> },
+        { name: 'Kafka', icon: <SiApachekafka className="text-black" /> },
+        { name: 'Spark', icon: <SiApachespark className="text-orange-500" /> },
+        { name: 'Postman', icon: <SiPostman className="text-orange-500" /> },
+        { name: 'Jira', icon: <SiJira className="text-blue-600" /> }
+      ] 
+    },
+    { 
+      name: 'Database & Storage', 
+      items: [
+        { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-600" /> },
+        { name: 'Cassandra', icon: <SiApachecassandra className='text-blue-300' /> },
+        { name: 'Oracle', icon: <SiOracle className="text-red-500" /> },
+        { name: 'MongoDB', icon: <SiMongodb className="text-green-500" /> },
+        { name: 'Hadoop', icon: <SiApachehadoop className="text-yellow-400" />},
+      ] 
+    },
+    { 
+      name: 'Frontend', 
+      items: [
+        { name: 'React', icon: <FaReact className="text-blue-500" /> },
+        { name: 'Angular', icon: <SiAngular className="text-red-500" /> },
+        { name: 'TypeScript', icon: <SiTypescript className="text-blue-500" /> },
+        { name: 'JavaScript', icon: <SiJavascript className="text-yellow-500" /> },
+        { name: 'HTML', icon: <FaHtml5 className="text-orange-500" /> },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-teal-500" /> }
+      ] 
     },
     {
-      category: 'Databases & Storage',
-      icons: [
-        { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-600" />, color: 'text-blue-600' },
-        { name: 'Cassandra', icon: <SiApachecassandra className="text-blue-300" />, color: 'text-blue-300' },
-        { name: 'Oracle', icon: <SiOracle className="text-red-500" />, color: 'text-blue-300' },
-        { name: 'MongoDB', icon: <SiMongodb className="text-green-500" />, color: 'text-green-500' },
-      ],
-    },
-    {
-     category: 'Tools',
-     icons: [
-       { name: 'Kafka', icon: <SiApachekafka className="text-black dark:text-white" />, color: 'text-black dark:text-white' },
-       { name: 'Spark', icon: <SiApachespark className="text-orange-500" />, color: 'text-orange-500' },
-       { name: 'Git', icon: <FaGitAlt className="text-orange-600" />, color: 'text-orange-600' },
-       { name: 'VS Code', icon: <VscVscode className="text-blue-500" />, color: 'text-blue-500' },
-       { name: 'Postman', icon: <SiPostman className="text-orange-500" />, color: 'text-orange-500' },
-       { name: 'Jira', icon: <SiJira className="text-blue-600" />, color: 'text-blue-600' },
-     ],
-    },
-    {
-      category: 'Cloud & DevOps',
-      icons: [
-        { name: 'AWS', icon: <FaAws className="text-orange-500" />, color: 'text-orange-500' },
-        { name: 'Docker', icon: <FaDocker className="text-blue-400" />, color: 'text-blue-400' },
-      ],
-    },
-    {
-      category: 'Frontend',
-      icons: [
-        { name: 'React', icon: <FaReact className="text-blue-500" />, color: 'text-blue-500' },
-        { name: 'JavaScript', icon: <SiJavascript className="text-yellow-500" />, color: 'text-yellow-500' },
-        { name: 'HTML5', icon: <FaHtml5 className="text-orange-500" />, color: 'text-orange-500' },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-teal-500" />, color: 'text-teal-500' },
-      ],
-    },
+      name: 'Cloud & DevOps',
+      items: [
+        { name: 'AWS', icon: <FaAws className="text-orange-500" /> },
+        { name: 'Docker', icon: <FaDocker className="text-blue-400" /> },
+        { name: 'Kubernetes', icon: <SiKubernetes className="text-blue-400" /> },
+        { name: 'Jenkins', icon: <SiJenkins className="text-orange-500" /> }
+      ]
+    }
   ];
 
   return (
@@ -72,7 +75,7 @@ const Home = () => {
             className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-accent shadow-lg relative group" // Slightly smaller image
           >
             <img
-              src="/profile.jpeg"
+              src="/profile.jpg"
               alt="Ochirtulga Namjim"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               loading="eager"
@@ -159,18 +162,49 @@ const Home = () => {
               <a href="https://twitter.com/ochirtulga" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-accent transition-colors">
                 <FaTwitter className="text-xl" /> {/* Reduced icon size */}
               </a>
+              <a href="https://leetcode.com/ochirtulga" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+                <SiLeetcode className="text-xl" /> {/* Reduced icon size */}
+              </a>
             </motion.div>
           </div>
         </motion.div>
 
+
+         {/* Skills Section */}
+         <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mb-16"
+        >
+          <h2 className="text-2xl font-bold mt-12 mb-8 text-center">Skills & Expertise</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            {skills.map((category) => (
+              <div
+                key={category.name}
+                className="bg-secondary p-6 rounded-lg hover:scale-105 transition-transform"
+              >
+                <h3 className="text-xl font-semibold mb-4 text-accent text-center">{category.name}</h3>
+                <ul className="space-y-3">
+                  {category.items.map((item) => (
+                    <li key={item.name} className="flex items-center gap-3">
+                      <span className="text-2xl">{item.icon}</span>
+                      <span>{item.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </motion.div>
         {/* New Tech Stack Section */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
           className="mt-16" // Reduced top margin
-        >
-          <h3 className="text-3xl font-semibold text-center mb-10">Technologies I Work With</h3>
+        > */}
+          {/* <h3 className="text-3xl font-semibold text-center mb-10">Technologies I Work With</h3>
            <div className="space-y-10">
             {techStack.map((category) => (
               <div key={category.category}>
@@ -201,8 +235,8 @@ const Home = () => {
                 </motion.div>
               </div>
             ))}
-          </div>
-        </motion.div>
+          </div> */}
+        {/* </motion.div> */}
       </div>
     </section>
   );

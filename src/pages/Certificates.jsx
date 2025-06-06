@@ -3,27 +3,28 @@ import { AcademicCapIcon } from '@heroicons/react/24/outline';
 
 const Certificates = () => {
   const certificates = [
-    {
-      title: 'Apache Cassnadra 3.x Developer Associate',
-      issuer: 'DataStax',
-      date: '2019',
-      description: 'Demonstrated ability to understand distributed system, design and deploy scalable, highly available, and fault-tolerant systems with distributed database',
-      link: 'https://www.datastax.com/academy/certs/lookup/9d630d61-3770-4846-a38f-25482e926c53/index.html' // Add your credential link here
-    },
+    
     {
       title: 'AWS Cloud Practitioner',
       issuer: 'Amazon Web Services',
-      date: '2025',
+      date: 'Apr 2025',
       description: 'Validated understanding of core AWS services, security, architecture, pricing, and support, making it a good starting point for my cloud career.',
       link: 'https://www.credly.com/badges/4d742d8f-0d3a-4a6a-8d5a-a2ad8bbf6de5/linked_in_profile' // Add your credential link here
     },
     {
-      title: 'Coming soon...',
-      issuer: 'Company',
-      date: 'in near future',
-      description: '...',
-      link: 'https://www.credly.com/badges' // Add your credential link here
+      title: 'COBIT Foundation',
+      issuer: 'ISACA',
+      date: 'Dec 2019',
+      description: 'Demonstrated knowledge in enterprise IT governance and management using the COBIT framework. Gained expertise in aligning IT strategy with business goals, managing risk, and evaluating IT performance. ',
+      link: 'https://www.credly.com/badges/2f509f61-b1cd-4ff5-b2bb-f22230fb1579' // Add your credential link here
     },
+    {
+      title: 'Apache Cassnadra 3.x Developer Associate',
+      issuer: 'DataStax',
+      date: 'Apr 2019',
+      description: 'Demonstrated ability to understand distributed system, design and deploy scalable, highly available, and fault-tolerant systems with distributed database',
+      link: 'https://www.datastax.com/academy/certs/lookup/9d630d61-3770-4846-a38f-25482e926c53/index.html' // Add your credential link here
+    }
     // Add more certificates as needed
   ];
 
